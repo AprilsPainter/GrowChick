@@ -1,22 +1,10 @@
-import sys
 import pygame as py
+from scenes.mainscreen import show_main_screen
 
 py.init()
-
-screen = py.display.set_mode((640, 360))
+screen = py.display.set_mode((0,0), py.FULLSCREEN)  # 1920 x 1080
 py.display.set_caption("Grow Chick!")
 
-WHITE = (255, 255, 255)
+show_main_screen(screen)
 
-Running = True
-while Running:
-    screen.fill(WHITE)
-    
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            Running = False
-            
-    py.display.flip()
-    
 py.quit()
-sys.exit()
