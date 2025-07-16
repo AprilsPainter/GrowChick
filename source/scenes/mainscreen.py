@@ -1,36 +1,39 @@
 import pygame as py
 import os
 
-def show_main_screen(screen):
-    clock = py.time.Clock()
-    running = True
+def show_mainscreen(screen, events):
 
-    btn_path = os.path.join("assets", "ui", "icons", "button_play.png")
+    # 색상 설정
+    WHITE = (255, 255, 255)
+    YELLOW = (255, 196, 0)
+
+    screen.fill(WHITE)
+
+    # 디스플레이 너비, 높이 설정
+    WIDTH, HEIGHT = screen.get_size()
+
+    # 경로 설정
+    btn_PLAY_path = os.path.join("assets", "ui", "icons", "button_play.png")
     font_path = os.path.join("assets", "ui", "fonts", "Paperlogy-8ExtraBold.ttf")
 
-    font = py.font.Font(font_path, 128)
-    
-    play_button = py.image.load(btn_path)
-    play_button = py.transform.scale(play_button, (256, 256))
-    play_button_rect = play_button.get_rect(center = (400, 400))
+    # PLAY 버튼 이미지 로드
+    btn_PLAY = py.image.load(btn_PLAY_path)
+    btn_PLAY = py.transform.scale(btn_PLAY, (256, 256))
+    btn_PLAY_rect = btn_PLAY.get_rect(center = (WIDTH // 2, HEIGHT * 2 / 3))
 
-    title_text = font.render("병아리를 키워라!", True, (255, 186, 0))
-    title_text_rect = title_text.get_rect(center = (400, 200))
+    # 폰트 & 텍스트 설정
+    font = py.font.Font(font_path, 200)
+    title_GrowChick = font.render("병아리를 키워라!", True , YELLOW)
+    title_GrowChick_rect = title_GrowChick.get_rect(center = (WIDTH // 2, HEIGHT // 3))
 
-    while running:
-        screen.fill((255, 255, 255))
+    # PLAY 버튼, 타이틀 텍스트 화면에 그리기
+    screen.blit(btn_PLAY, btn_PLAY_rect)
+    screen.blit(title_GrowChick, title_GrowChick_rect)
 
-        screen.blit(title_text, title_text_rect)
-        screen.blit(play_button, play_button_rect)
-
-        for event in py.event.get():
-            if event.type == py.QUIT:
-                running = False
-
-            elif event.type == py.MOUSEBUTTONDOWN:
-                if play_button_rect.collidepoint(event.pos):
-                    print("게임 시작!") # 추후 게임 시작 함수로 연결
-                    running = False
-
-        py.display.update()
-        clock.tick(60)
+    # PLAY 버튼 클릭 이벤트 루프
+    for event in events:
+        if event.type == py.MOUSEBUTTONDOWN:
+            if btn_PLAY_rect.collidepoint(event.pos):
+                print("추후 게임 시작 함수로 연결")
+                
+    py.display.update()
