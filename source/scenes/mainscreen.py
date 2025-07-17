@@ -18,13 +18,13 @@ def show_mainscreen(screen, events):
 
     # PLAY 버튼 이미지 로드
     btn_PLAY = py.image.load(btn_PLAY_path)
-    btn_PLAY = py.transform.scale(btn_PLAY, (256, 256))
+    btn_PLAY = py.transform.scale(btn_PLAY, (400, 400))
     btn_PLAY_rect = btn_PLAY.get_rect(center = (WIDTH // 2, HEIGHT * 2 / 3))
 
     # 폰트 & 텍스트 설정
     font = py.font.Font(font_path, 200)
     title_GrowChick = font.render("병아리를 키워라!", True , YELLOW)
-    title_GrowChick_rect = title_GrowChick.get_rect(center = (WIDTH // 2, HEIGHT // 3))
+    title_GrowChick_rect = title_GrowChick.get_rect(center = (WIDTH // 2, HEIGHT * 3 / 8))
 
     # PLAY 버튼, 타이틀 텍스트 화면에 그리기
     screen.blit(btn_PLAY, btn_PLAY_rect)
