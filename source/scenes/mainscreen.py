@@ -1,39 +1,33 @@
 import pygame as py
-import os
+from util.common import load_image, render_text, center_blit
+from util.colors import WHITE, YELLOW
+from model.common import UIButton
 
 def show_mainscreen(screen, events):
 
-    # 색상 설정
-    WHITE = (255, 255, 255)
-    YELLOW = (255, 196, 0)
-
     screen.fill(WHITE)
 
-    # 디스플레이 너비, 높이 설정
-    WIDTH, HEIGHT = screen.get_size()
+    s_width, s_height = screen.get_size()
 
-    # 경로 설정
-    btn_PLAY_path = os.path.join("assets", "ui", "icons", "button_play.png")
-    font_path = os.path.join("assets", "ui", "fonts", "Paperlogy-8ExtraBold.ttf")
+    text_title = render_text(
+        "병아리를 키워라!",
+        "assets", "ui", "fonts", "Paperlogy-8ExtraBold.ttf",
+        size=200, color=YELLOW
+    )
 
-    # PLAY 버튼 이미지 로드
-    btn_PLAY = py.image.load(btn_PLAY_path)
-    btn_PLAY = py.transform.scale(btn_PLAY, (400, 400))
-    btn_PLAY_rect = btn_PLAY.get_rect(center = (WIDTH // 2, HEIGHT * 2 / 3))
+    center_blit(screen, text_title, 0.5, 0.375)
 
-    # 폰트 & 텍스트 설정
-    font = py.font.Font(font_path, 200)
-    title_GrowChick = font.render("병아리를 키워라!", True , YELLOW)
-    title_GrowChick_rect = title_GrowChick.get_rect(center = (WIDTH // 2, HEIGHT * 3 / 8))
+    img_play = load_image(
+        "assets", "ui", "icons", "button_play.png",
+        scale=(400, 400)
+    )
 
-    # PLAY 버튼, 타이틀 텍스트 화면에 그리기
-    screen.blit(btn_PLAY, btn_PLAY_rect)
-    screen.blit(title_GrowChick, title_GrowChick_rect)
+    btn_play = UIButton(img_play, pos=(s_width * 0.5, s_height * 0.65))
 
-    # PLAY 버튼 클릭 이벤트 루프
     for event in events:
-        if event.type == py.MOUSEBUTTONDOWN:
-            if btn_PLAY_rect.collidepoint(event.pos):
-                print("추후 게임 시작 함수로 연결")
-                
+        if btn_play.click(event):
+            print("추후 게임 시작 함수로 연결") # 임시 텍스트 출력
+    
+    btn_play.draw(screen)
+
     py.display.update()

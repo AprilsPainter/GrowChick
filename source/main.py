@@ -2,6 +2,7 @@ import pygame as py
 from scenes.mainscreen import show_mainscreen
 
 py.init()
+py.mixer.init()
 
 screen = py.display.set_mode((640, 360))
 py.display.set_caption("Grow Chick!")
