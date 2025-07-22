@@ -40,7 +40,7 @@ class Chick:
         elif self.day == 9:
             self.stage = "grown"
         elif self.day == 16:
-            self.stage - "chicken"
+            self.stage = "chicken"
 
     # 행동 횟수 소모
     def use_action(self):

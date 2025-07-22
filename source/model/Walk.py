@@ -30,7 +30,7 @@ class WalkManager:
             ],
 
             "뒷골목" : [
-                WalkEvent("좁은 골목을 탐험하며 즐겁게 산책햇어요!",
+                WalkEvent("좁은 골목을 탐험하며 즐겁게 산책했어요!",
                           {"happiness" : +15, "stress" : -20, "cleanliness" : -15}),
 
                 WalkEvent("길바닥에서 지렁이 친구들을 만났어요! *꿀꺽*",
@@ -39,7 +39,7 @@ class WalkManager:
                 
                 WalkEvent("깡패 패거리가 시비를 걸었어요...",
                           {"happiness" : -15, "stress" : +25, "cleanliness" : -15}),
-            ]
+            ],
 
             "치킨집" : [
                 WalkEvent("...")

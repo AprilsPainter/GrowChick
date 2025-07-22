@@ -1,4 +1,4 @@
-# soruce/model/UI.py
+# source/model/UI.py
 
 import pygame as py
 

@@ -1,9 +1,10 @@
 # source/scenes/mainscreen.py
 
 import pygame as py
+from scenes.map import show_map
 from util.common import load_image, render_text, center_blit
 from util.colors import WHITE, YELLOW
-from model.common import UIButton
+from model.UI import UIButton
 
 def show_mainscreen(screen, events):
 
@@ -28,7 +29,7 @@ def show_mainscreen(screen, events):
 
     for event in events:
         if btn_play.click(event):
-            print("추후 게임 시작 함수로 연결") # 임시 텍스트 출력
+            show_map(screen, events)    # map 테스트용 임시 함수 연결
     
     btn_play.draw(screen)
 
