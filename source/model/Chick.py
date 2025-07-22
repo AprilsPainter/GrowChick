@@ -1,4 +1,7 @@
+# source/model/Chick.py
+
 class Chick:
+
     # 클래스 초기 상태 설정
     def __init__(self):
         self.day = 1

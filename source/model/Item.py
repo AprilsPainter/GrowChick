@@ -1,3 +1,5 @@
+# source/model/Item.py
+
 class FoodItem:
     def __init__(self, name, affected_stat, amount, image):
         self.name = name
