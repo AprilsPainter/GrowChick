@@ -11,7 +11,7 @@ class FoodItem:
 
     def eat(self):
         Chick.change_stat(self.chick, self.effect_stat, self.effect_amount)
-        print(f"{self.name}을/를 먹음.")
+        print(f"{self.name}을/를 먹었다.")
 
     def get_name(self):
         return self.name
