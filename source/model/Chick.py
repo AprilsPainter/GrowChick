@@ -11,27 +11,10 @@ class Chick:
             "tiredness" : 30,
             "stress" : 0
         }
-        self.actions_left = 5
-        self.ending_flags = set()
 
     def change_stat(self, stat, amount):
         if stat in self.stats:
             self.stats[stat] = max(0, min(100, self.stats[stat] + amount))
-    
-    def use_action(self):
-        if self.actions_left > 0:
-            return True
-        else:
-            print("행동 횟수를 모두 소비하였습니다.")   # 임시
-            return False
-        
-    def pass_day(self):
-        if self.actions_left > 0:
-            print("잔여 행동 횟수가 존재합니다.")   # 임시
-            return
-        self.day += 1
-        self.actions_left = 5
-        self.update_stage()
 
     def update_stage(self):
         if self.day == 1:
@@ -42,3 +25,19 @@ class Chick:
             self.stage = "grown"
         elif self.day == 14:
             self.stage = "chicken"
+
+    def get_stats(self):
+        return self.stats
+    
+    def get_stage(self):
+        return self.stage
+    
+    def check_ending(self):
+        sorted_stats = sorted(self.stats.items(), key=lambda x : x[1], reverse=True)
+        top1, top2 = sorted_stats[0][0], sorted_stats[1][0]
+        return (top1, top2)
+    
+    def get_day(self):
+        return self.day
+    
+chick = Chick()
