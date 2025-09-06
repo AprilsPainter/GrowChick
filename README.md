@@ -28,4 +28,4 @@
 - 유경험자가 단 한 명도 없는 절망적인 상황 속에서도 어찌저찌 하고 있다는 놀라운 성과!
 
 
-Special thanks to ChatGPT.
+Special thanks to ChatGPT (For real...)

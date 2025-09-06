@@ -5,12 +5,12 @@ class FoodItem:
     def __init__(self, name, description, **effect):
         self.name = name
         self.description = description
-        self.effect_stat = effect.keys()
-        self.effect_amount = effect.values()
+        self.effect = effect
         self.chick = Chick()
 
     def eat(self):
-        Chick.change_stat(self.chick, self.effect_stat, self.effect_amount)
+        for stat, amount in self.effect.items():
+            self.chick.change_stat(stat, amount)
         print(f"{self.name}을/를 먹었다.")
 
     def get_name(self):
@@ -19,8 +19,5 @@ class FoodItem:
     def get_description(self):
         return self.description
     
-    def get_effect_stat(self):
-        return self.effect_stat
-    
-    def get_effect_amount(self):
-        return self.effect_amount
+    def get_effect(self):
+        return self.effect
