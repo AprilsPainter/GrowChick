@@ -26,7 +26,7 @@ jobs:
 
     - name: Build exe with PyInstaller
       run: |
-        pyinstaller --onefile --windowed main.py
+        pyinstaller --onefile --windowed ./source/main.py
 
     - name: Upload exe artifact
       uses: actions/upload-artifact@v4
