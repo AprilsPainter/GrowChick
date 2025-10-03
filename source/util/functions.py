@@ -3,6 +3,7 @@
 import pygame as py
 py.init()
 
+
 # 텍스트 객체 로드
 def load_text(text, font_path, size, color, bg_color=None):
 
