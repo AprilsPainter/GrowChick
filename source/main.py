@@ -23,7 +23,7 @@ while running:
     screen.fill(LEMON)  # 배경 이미지 임시로 대체
 
     show_text(Title, 0.5, 0.35, screen)
-    show_img(btn_PLAY, 0.5, 0.65, screen)
+    PLAY_rect = show_img(btn_PLAY, 0.5, 0.65, screen)
 
     events = py.event.get()
     for event in events:
@@ -35,7 +35,9 @@ while running:
                 py.display.set_mode((1900, 1020))
             else:
                 py.display.set_mode((1920, 1080), py.FULLSCREEN)
-            
+    
+     
+
     py.display.update()
 
 py.quit()
