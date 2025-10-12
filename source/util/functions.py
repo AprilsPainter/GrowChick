@@ -1,4 +1,4 @@
-# source/util/funtions.py
+# source/util/functions.py
 """개발에 필요한 함수 모듈"""
 
 import pygame as py
@@ -45,8 +45,8 @@ def show_img(screen, img_surface, w_r=None, h_r=None, x_c=None, y_c=None):
 
     if w_r and h_r:
         screen_width, screen_height = screen.get_size()
-        x = screen_width * width_ratio
-        y = screen_height * height_ratio
+        x = screen_width * w_r
+        y = screen_height * h_r
 
         rect = img_surface.get_rect()
         rect.center = (x, y)
@@ -58,3 +58,21 @@ def show_img(screen, img_surface, w_r=None, h_r=None, x_c=None, y_c=None):
         screen.blit(img_surface, rect)
         
     return rect
+
+def typing(text, font, color, pos, screen, speed=50):
+    displayed_text = ""
+    for char in text:
+        displayed_text += char
+        render_text = font.render(displayed_text, True, color)
+        screen.blit(render_text, pos)
+        py.display.update()
+        py.time.delay(speed)
+        
+def fade(surface, screen, pos, duration=500):
+    clock = py.time.Clock()
+    for alpha in range(0, 256, 10):
+        temp_surf = surface.copy()
+        temp_surf.set_alpha(alpha)
+        screen.blit(temp_surf, pos)
+        py.display.update()
+        clock.tick(60)

@@ -1,66 +1,56 @@
 # source/scenes/title_scene.py
-"""타이틀 화면(메인 화면)"""
+"""타이틀 화면 / 메인화면"""
 
 import os
 import pygame as py
-from source.util.functions import load_img, show_img
+from source.util.functions import load_img, load_text, show_img, show_text
+from source.util.paths import text_font_path
 
 py.init()
 
 class TitleScene:
-    """타이틀 화면 구성과 기능을 관리하는 클래스"""
-
     def __init__(self, screen):
-
-        self.f11 = False
         self.screen = screen
-
-        bg_path = os.path.join("assets", "backgrounds", "TitleScreen_bg.png")
-        self.bg = load_img(bg_path, scale=(1920, 1080))
-
-        play_btn_path = os.path.join("assets", "ui", "icons", "PLAY_btn.png")
-        self.play_btn = load_img(play_btn_path, scale=(296, 128))
-        self.play_btn_rect = None
-
-        quit_btn_path = os.path.join("assets", "ui", "icons", "QUIT_btn.png")
-        self.quit_btn = load_img(quit_btn_path, scale=(296, 128))
-        self.quit_btn_rect = None
-
-        config_path = os.path.join("assets", "ui", "icons", "Config_btn.png")
-        self.config_btn = load_img(config_path, scale=(128, 128))
-        self.config_btn_rect = None
-
+        self.f11 = False
+        
+        py.display.set_caption("Grow Chick!")
+        
+        BG_PATH = os.path.join("assets", "backgrounds", "title-screen.png")
+        PLAY_PATH = os.path.join("assets", "ui", "icons", "play-bar.png")
+        SETTING_PATH = os.path.join("assets", "ui", "icons", "setting.png")
+        INFO_PATH = os.path.join("assets", "ui", "icons", "information.png")
+        EXIT_PATH = os.path.join("assets", "ui", "icons", "exit.png")
+        
+        self.BG = load_img(BG_PATH, scale=(1920, 1080))
+        self.PLAY = load_img(PLAY_PATH, scale=(408, 176))
+        self.SETTING = load_img(SETTING_PATH, scale=(138, 138))
+        self.INFO = load_img(INFO_PATH, scale=(130, 130))
+        self.EXIT = load_img(EXIT_PATH, scale=(120, 120))
+        
     def run(self):
-        """객체를 화면에 표시하고 실행 중 기능을 관리"""
-
-        running = True
-
-        while running:
-
-            show_img(self.bg, 0.5, 0.5, self.screen)
-            self.play_btn_rect = show_img(self.play_btn, 0.5, 0.75, self.screen)
-            self.quit_btn_rect = show_img(self.quit_btn, 0.1, 0.075, self.screen)
-            self.config_btn_rect = show_img(self.config_btn, 0.95, 0.1, self.screen)
-
-            events = py.event.get()
-
-            for event in events:
-
+        while True:
+            self.screen.fill((0, 0, 0))
+            
+            show_img(self.screen, self.BG, w_r=0.5, h_r=0.5)
+            PLAY_RECT = show_img(self.screen, self.PLAY, x_c=960, y_c=678)
+            SETTING_RECT = show_img(self.screen, self.SETTING, x_c=960, y_c=917)
+            INFO_RECT = show_img(self.screen, self.INFO, x_c=777, y_c=917)
+            EXIT_RECT = show_img(self.screen, self.EXIT, x_c=1151, y_c=917)
+            
+            
+            for event in py.event.get():
                 if event.type == py.QUIT:
-                    running = False
-
+                    return "quit"
+                
+                elif event.type == py.MOUSEBUTTONDOWN and PLAY_RECT.collidepoint(event.pos):
+                    return "living room"
+                
                 elif event.type == py.KEYDOWN and event.key == py.K_F11:
                     self.f11 = not self.f11
-
+                    
                     if self.f11:
-                        self.screen = py.display.set_mode((1910, 1020))
+                        py.display.set_mode((1890, 1060))
                     else:
-                        self.screen = py.display.set_mode((1920, 1080), py.FULLSCREEN)
-
-                elif event.type == py.MOUSEBUTTONDOWN:
-                    if self.play_btn_rect.collidepoint(event.pos):
-                        return "Living room"
-
+                        py.display.set_mode((1920, 1080), py.FULLSCREEN)
+                        
             py.display.update()
-
-        py.quit()
