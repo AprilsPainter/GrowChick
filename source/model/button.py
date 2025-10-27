@@ -1,39 +1,39 @@
-# source/model/button.py
-"""버튼 생성 및 호버 표시 기능을 위한 클래스"""
-
 import pygame as py
-py.init()
+from source.util.functions import load_img, show_img
 
 class Button:
-    def __init__(self, img_path, pos):
-        self.image = py.image.load(img_path).convert_alpha()
-        self.rect = self.image.get_rect(center=pos)
+    """버튼 이미지 표시 및 이벤트 처리 관리"""
+
+    def __init__(self, screen, image_path: str, scale: tuple, coordinates: tuple = None):
+        self.screen = screen
+        self.image = load_img(image_path, scale)
+        self.coordinates = coordinates
+        self.rect = None
         self.hovered = False
         self.clicked = False
-        
-    def update(self, mouse_pos, mouse_clicked):
-        if self.rect.collidepoint(mouse_pos):
-            if not self.clicked:
-                self.hovered = True
-        
-        else:
-            self.hovered = False
-            
-        if mouse_clicked[0] and self.rect.collidepoint(mouse_pos):
+        self.scale = scale
+
+    def draw(self):
+        """버튼 이미지 표시 및 rect 생성"""
+        self.rect = show_img(self.screen, self.image, self.coordinates)
+
+    def manage_event(self, event):
+        """클릭/호버 이벤트 관리 및 사이즈 변경"""
+
+        if event.type == py.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
             self.clicked = True
-        
-        else:
-            self.clicked = False
-            
-    def show(self, screen):
-        if self.hovered:
-            image = py.transform.scale(self.image, int((self.rect.width * 1.1), int(self.rect.height * 1.1)))
-        
-        elif self.clicked:
-            image = py.transform.scale(self.image, int((self.rect.width * 0.9), int(self.rect.height * 0.9)))
-            
-        else:
-            image = self.image
-            
-        rect = image.get_rect(center=self.rect.center)
-        screen.blit(image, rect.center)
+            self.change_size()
+
+        elif event.type == py.MOUSEMOTION:
+            self.hovered = self.rect.collidepoint(event.pos)
+            self.change_size()
+
+    def change_size(self):
+        """클릭/호버 여부에 따라 버튼 이미지 크기 변경"""
+
+        if self.hovered and not self.clicked:
+            hovered_scale = (int(self.scale[0] * 1.5), int(self.scale[1] * 1.5))
+            self.image = py.transform.scale(self.image, hovered_scale)
+
+        elif self.hovered and self.clicked:
+            self.image = py.transform.scale(self.image, self.scale)

@@ -10,4 +10,3 @@ DEFAULT_STATS = {
 }
 
 FONT_PATH = os.path.join("assets", "ui", "fonts", "NeoDunggeunmoPro-Regular.ttf")
-FONT_SIZE_SMALL = 
