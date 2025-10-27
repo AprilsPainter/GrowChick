@@ -1,8 +1,13 @@
 """Scene 전환 관리"""
 
+import sys
+import os
 import pygame as py
 from source.scenes.title_scene import TitleScene
 from source.scenes.living_room import LivingRoom
+
+py.init()
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     """메인 루프: 현재 씬 실행 및 씬 전환 관리"""
