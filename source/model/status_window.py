@@ -16,7 +16,6 @@ class StatusWindow:
         self.screen = screen
         self.system = system
         self.minimize = False
-        self.stats = config.DEFAULT_STATS
 
         # day, actions 이전 값 캐싱
         self.prev_day = None
@@ -37,11 +36,11 @@ class StatusWindow:
         self.show_btn = load_img(show_btn_path, scale=(60, 60))
 
         # 고정 텍스트 로드
-        self.text_stat = load_text("스탯", config.FONT_PATH, 64)
-        self.text_charm = load_text("매력", config.FONT_PATH, 48)
-        self.text_fullness = load_text("포만감", config.FONT_PATH, 48)
-        self.text_happiness = load_text("행복도", config.FONT_PATH, 48)
-        self.text_cleanliness = load_text("청결도", config.FONT_PATH, 48)
+        self.text_stat = load_text("스탯", config.FONT_PATH, 62)
+        self.text_charm = load_text("매력", config.FONT_PATH, 44)
+        self.text_fullness = load_text("포만감", config.FONT_PATH, 44)
+        self.text_happiness = load_text("행복도", config.FONT_PATH, 44)
+        self.text_cleanliness = load_text("청결도", config.FONT_PATH, 44)
 
         # 초기 동적 텍스트 생성
         self.update_texts(force=True)
@@ -58,12 +57,37 @@ class StatusWindow:
         actions = self.system.get_actions()
 
         if force or day != self.prev_day:           # force=True거나 기존 값과 현재 값이 달라졌을 때
-            self.text_day = load_text(f"{day}일차", config.FONT_PATH, 62)
+            self.text_day = load_text(f"{day}일차", config.FONT_PATH, 56)
             self.prev_day = day
 
         if force or actions != self.prev_actions:   # force=True거나 기존 값과 현재 값이 달라졌을 때
-            self.text_actions = load_text(f"잔여 행동 횟수: {actions}회", config.FONT_PATH, 40)
+            self.text_actions = load_text(f"잔여 행동 횟수: {actions}회", config.FONT_PATH, 35)
             self.prev_actions = actions
+
+    def draw_stat_bars(self):
+        """값에 따라 달라지는 스탯 바를 그림"""
+
+        bar_colors = config.STAT_BAR_COLORS
+
+        bar_max_width = 220
+        bar_height = 28
+
+        bar_positions = {
+            "매력": (250, 370),
+            "포만감": (250, 450),
+            "행복도": (250, 530),
+            "청결도": (250, 610)
+        }
+
+        for name, (x, y) in bar_positions.items():
+            empty_bar = (x, y, bar_max_width, bar_height)
+            py.draw.rect(self.screen, (255, 255, 255), empty_bar, border_radius=4)
+
+            value = self.system.get_stat(name)
+            filled_bar_width = int(bar_max_width * (value / 100))
+            filled_bar = (x, y, filled_bar_width, bar_height)
+            bar_color = bar_colors.get(name)
+            py.draw.rect(self.screen, bar_color, filled_bar, border_radius=4)
 
     def draw(self):
         """화면에 최신 상태 객체를 그림"""
@@ -77,11 +101,13 @@ class StatusWindow:
             # 텍스트 그리기
             show_text(self.screen, self.text_day, (405, 180))
             show_text(self.screen, self.text_stat, (163, 180))
-            show_text(self.screen, self.text_actions, (279, 270))
-            show_text(self.screen, self.text_charm, (178, 380))
-            show_text(self.screen, self.text_fullness, (154, 460))
-            show_text(self.screen, self.text_happiness, (154, 540))
-            show_text(self.screen, self.text_cleanliness, (154, 620))
+            show_text(self.screen, self.text_actions, (279, 272))
+            show_text(self.screen, self.text_charm, (178, 384))
+            show_text(self.screen, self.text_fullness, (154, 464))
+            show_text(self.screen, self.text_happiness, (154, 544))
+            show_text(self.screen, self.text_cleanliness, (154, 624))
+
+            self.draw_stat_bars()
 
         else:
             self.show_rect = show_img(self.screen, self.show_btn, (85, 957))
