@@ -10,6 +10,7 @@ class System:
         self.actions = 5
         self.chick = Chick()
         self.stats = self.chick.get_stats()
+        self.time_zone = "day"
 
     def get_day(self):
         """외부에서 day 값 접근"""
@@ -26,6 +27,7 @@ class System:
     def use_action(self):
         """행동 횟수 사용"""
         self.actions -= 1
+        self.actions = max(0, min(5, self.actions))
 
     def update_stat(self, stat, amount):
         """스탯 값 업데이트"""
@@ -42,3 +44,19 @@ class System:
     def get_stat(self, stat):
         """외부에서 특정 스탯 값 접근"""
         return self.stats[stat]
+
+    def update_time_zone(self):
+        """행동 횟수에 따라 시간대 업데이트"""
+
+        if self.get_actions() >= 3:
+            self.time_zone = "day"
+
+        elif self.get_actions() >= 1:
+            self.time_zone = "evening"
+
+        elif self.get_actions() == 0:
+            self.time_zone = "night"
+
+    def get_time_zone(self):
+        """외부에서 시간대 접근"""
+        return self.time_zone

@@ -12,7 +12,7 @@ class TitleScene:
 
     def __init__(self, screen: py.Surface):
         self.screen = screen
-        self.fullscreen_enabled = False
+        self.fullscreen = True
 
         py.display.set_caption("Grow Chick!")
 
@@ -67,8 +67,8 @@ class TitleScene:
                         return "quit"
 
                 elif event.type == py.KEYDOWN and event.key == py.K_F11:
-                    self.fullscreen_enabled = not self.fullscreen_enabled
-                    if self.fullscreen_enabled:
+                    self.fullscreen = not self.fullscreen
+                    if not self.fullscreen:
                         py.display.set_mode((1890, 1060))
                     else:
                         py.display.set_mode((1920, 1080), py.FULLSCREEN)
