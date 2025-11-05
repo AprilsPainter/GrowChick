@@ -1,6 +1,12 @@
 # source/scenes/kitchen.py
 
-import os
+import sys, os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+if os.path.join(BASE_DIR, "source") not in sys.path:
+    sys.path.append(os.path.join(BASE_DIR, "source"))
+
 import pygame as py
 from source.model.status_window import StatusWindow
 from source.model.system import System

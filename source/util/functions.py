@@ -1,6 +1,13 @@
 # source/util/functions.py
 """개발에 필요한 함수 모듈"""
 
+import sys, os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+if os.path.join(BASE_DIR, "source") not in sys.path:
+    sys.path.append(os.path.join(BASE_DIR, "source"))
+
 import pygame as py
 py.init()
 

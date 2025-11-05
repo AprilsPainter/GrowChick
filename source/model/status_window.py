@@ -1,9 +1,18 @@
 # source/model/status_window.py
 
-import os
+import sys, os
+
+from source.scenes import kitchen
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+if os.path.join(BASE_DIR, "source") not in sys.path:
+    sys.path.append(os.path.join(BASE_DIR, "source"))
+
 import pygame as py
 from source.util.functions import load_img, load_text, show_img, show_text
 from source.model.system import System
+from source.model.button import Button
 import config
 
 py.init()
@@ -21,19 +30,22 @@ class StatusWindow:
         self.prev_day = None
         self.prev_actions = None
 
-        # rect 초기화
-        self.minimize_rect = None
-        self.show_rect = None
-
         # 이미지 경로
         status_frame_path = os.path.join("assets", "ui", "layout", "status-frame.png")
-        minimize_btn_path = os.path.join("assets", "ui", "icons", "minimize-window.png")
-        show_btn_path = os.path.join("assets", "ui", "icons", "show.png")
+
+        self.minimize_btn_path = os.path.join("assets", "ui", "icons", "minimize-window.png")
+        self.show_btn_path = os.path.join("assets", "ui", "icons", "show.png")
+        self.select_btn_path = os.path.join("assets", "ui", "icons", "select-button.png")
+
+        self.bathroom_btn_path = os.path.join("assets", "ui", "icons", "bathroom-button.png")
+        self.bedroom_btn_path = os.path.join("assets", "ui", "icons", "bedroon-button.png")
+        self.kitchen_btn_path = os.path.join("assets", "ui", "icons", "kitchen-button.png")
+        self.living_room_btn_path = os.path.join("assets", "ui", "icons", "living-room-button.png")
+        self.walk_btn_path = os.path.join("assets", "ui", "icons", "walk-button.png")
+        
 
         # 이미지 로드
         self.status_frame = load_img(status_frame_path, scale=(888, 888))
-        self.minimize_btn = load_img(minimize_btn_path, scale=(60, 60))
-        self.show_btn = load_img(show_btn_path, scale=(60, 60))
 
         # 고정 텍스트 로드
         self.text_stat = load_text("스탯", config.FONT_PATH, 62)
@@ -96,7 +108,20 @@ class StatusWindow:
 
         if not self.minimize:
             show_img(self.screen, self.status_frame, (282, 562))
-            self.minimize_rect = show_img(self.screen, self.minimize_btn, (473, 957))
+
+            minimize_btn = Button(self.screen, self.minimize_btn_path, scale= (60, 60),coordinates=(473, 957))
+            bathroom_btn = Button(self.screen, self.bathroom_btn, coordinates=(154, 800))
+            bedroom_btn = Button(self.screen, self.bathroom_btn, coordinates=(154, 880))
+            kitchen_btn = Button(self.screen, self.kitchen_btn, coordinates=(154, 960))
+            living_room_btn = Button(self.screen, self.living_room_btn, coordinates=(234, 800))
+            walk_btn = Button(self.screen, self.walk_btn, coordinates=(234, 880))
+
+            self.minimize_rect = minimize_btn.draw()
+            self.bathroom_rect = bathroom_btn.draw()
+            self.bedroom_rect = bedroom_btn.draw()
+            self.kitchen_rect = kitchen_btn.draw()
+            self.living_room_rect = living_room_btn.draw()
+            self.walk_rect = walk_btn.draw()
 
             # 텍스트 그리기
             show_text(self.screen, self.text_day, (405, 180))
@@ -110,7 +135,7 @@ class StatusWindow:
             self.draw_stat_bars()
 
         else:
-            self.show_rect = show_img(self.screen, self.show_btn, (85, 957))
+            self.show_btn = Button(self.screen, self.show_btn_path, scale=(60, 60), coordinates=(85, 957))
 
     def manage_event(self, event):
         """클릭 이벤트 제어"""
@@ -120,3 +145,4 @@ class StatusWindow:
                 self.toggle()
             elif self.minimize and self.show_rect and self.show_rect.collidepoint(event.pos):
                 self.toggle()
+

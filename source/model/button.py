@@ -1,10 +1,19 @@
+# source/model/button.py
+
+import sys, os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+if os.path.join(BASE_DIR, "source") not in sys.path:
+    sys.path.append(os.path.join(BASE_DIR, "source"))
+
 import pygame as py
 from source.util.functions import load_img, show_img
 
 class Button:
     """버튼 이미지 표시 및 이벤트 처리 관리"""
 
-    def __init__(self, screen, image_path: str, scale: tuple, coordinates: tuple = None):
+    def __init__(self, screen, image_path: str, scale: tuple = None, coordinates: tuple = None):
         self.screen = screen
         self.image = load_img(image_path, scale)
         self.coordinates = coordinates

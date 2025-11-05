@@ -1,11 +1,13 @@
 """Scene 전환 관리"""
 
-import sys
-import os
+import sys, os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+if os.path.join(BASE_DIR, "source") not in sys.path:
+    sys.path.append(os.path.join(BASE_DIR, "source"))
+
 import pygame as py
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 from source.scenes.title_scene import TitleScene
 from source.scenes.living_room import LivingRoom
 
@@ -18,17 +20,17 @@ def main():
     py.display.set_caption("Grow Chick!")
 
     current_scene_name = "title"
-
+ 
     while True:
-        if current_scene_name == "quit":
+        if current_scene_name == "quit": 
             print("[종료] 'quit' 씬으로 이동하여 종료되었습니다.")
             break
 
-        # 씬 객체 생성
+        # 씬 객체 생성 
         if current_scene_name == "title":
             scene = TitleScene(screen)
         elif current_scene_name == "living room":
-            scene = LivingRoom(screen)
+            scene = LivingRoom(screen) 
         else:
             # 알 수 없는 씬 이름일 경우 종료
             print("[오류] 알 수 없는 Scene 이름입니다.")
