@@ -1,16 +1,18 @@
 # source/model/system.py
 
-import sys, os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.append(BASE_DIR)
-if os.path.join(BASE_DIR, "source") not in sys.path:
-    sys.path.append(os.path.join(BASE_DIR, "source"))
-
 from source.model.chick import Chick
 
 class System:
     """게임 전반 시스템 관리 클래스"""
+
+    _instance = None
+
+    @classmethod
+    def get_instance(cls):
+        """외부에서 system 인스턴스 이용"""
+        if cls._instance is None:
+            cls._instance = System()
+        return cls._instance
 
     def __init__(self):
         self.day = 1
