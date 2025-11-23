@@ -1,7 +1,5 @@
 # config.py
 
-import os
-
 DEFAULT_STATS = {
     "매력": 0,
     "포만감": 50,
@@ -15,5 +13,3 @@ STAT_BAR_COLORS = {
     "행복도": (57, 197, 6),
     "청결도": (2, 197, 227)
         }
-
-FONT_PATH = os.path.join("assets", "ui", "fonts", "NeoDunggeunmoPro-Regular.ttf")

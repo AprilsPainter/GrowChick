@@ -1,15 +1,15 @@
 """타이틀 Scene"""
 # source/scenes/title_scene.py
 
-import os
 import pygame as py
-from source.model.system import System
+from source.util.assets_manager import bg_path, path, scale, coords
 from source.util.functions import load_img, show_img
 from source.model.button import Button
+from source.model.system import System
 
 
 class TitleScene:
-    """타이틀 씬: 배경, 버튼 표시 및 씬 전환 처리."""
+    """타이틀 씬: 배경, 버튼 표시 및 씬 전환 처리"""
 
     def __init__(self, screen: py.Surface, system: System):
         self.screen = screen
@@ -19,22 +19,21 @@ class TitleScene:
 
         py.display.set_caption("Grow Chick!")
 
-        self.background = load_img(
-            os.path.join("assets", "backgrounds", "title-screen.png"),
-            scale=(1920, 1080)
-        )
-
-        # 버튼 이미지 경로
-        play_path = os.path.join("assets", "ui", "icons", "play-bar.png")
-        setting_path = os.path.join("assets", "ui", "icons", "setting.png")
-        info_path = os.path.join("assets", "ui", "icons", "information.png")
-        exit_path = os.path.join("assets", "ui", "icons", "exit.png")
+        self.background = load_img(bg_path["title"], scale=(1920, 1080))
 
         self.buttons = {
-            "play": Button(self.screen, play_path, scale=(408, 176), coordinates=(960, 678)),
-            "setting": Button(self.screen, setting_path, scale=(138, 138), coordinates=(960, 917)),
-            "info": Button(self.screen, info_path, scale=(130, 130), coordinates=(777, 917)),
-            "exit": Button(self.screen, exit_path, scale=(120, 120), coordinates=(1151, 917))
+            "play": Button(
+                self.screen, path["play"], scale["play"], coords["play"]
+                ),
+            "setting": Button(
+                self.screen, path["setting"], scale["setting"], coords["setting"]
+                ),
+            "info": Button(
+                self.screen, path["info"], scale["info"], coords["info"]
+                ),
+            "exit": Button(
+                self.screen, path["exit"], scale["exit"], coords["exit"]
+                )
         }
 
 
@@ -44,7 +43,7 @@ class TitleScene:
         self.screen.fill((0, 0, 0))
         show_img(self.screen, self.background, (960, 540))
 
-        for key, button in self.buttons.items():
+        for button in self.buttons.items():
             button.draw()
 
     def manage_event(self, event):

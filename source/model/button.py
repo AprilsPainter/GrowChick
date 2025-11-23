@@ -7,7 +7,7 @@ from source.util.functions import load_img, show_img
 class Button:
     """버튼 이미지 표시 및 이벤트 처리 관리"""
 
-    def __init__(self, screen, image_path: str, scale: tuple = None, coordinates: tuple = None):
+    def __init__(self, screen, image_path: str, scale: tuple, coordinates: tuple):
         self.screen = screen
         self.image_path = image_path
         self.scale = scale
