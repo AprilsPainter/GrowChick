@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    name: Build EXE
     runs-on: windows-latest
 
     steps:
@@ -26,9 +25,11 @@ jobs:
 
       - name: Build EXE
         run: |
-          pyinstaller --onefile --windowed ./source/main.py
-          mkdir -p dist
-          move ./dist/main.exe ./dist/GrowChick.exe
+          pyinstaller --onefile --windowed main.py --distpath dist
+          dir dist
+
+      - name: Rename EXE
+        run: Rename-Item -Path dist\main.exe -NewName GrowChick.exe
 
       - name: Create Release
         id: create_release
