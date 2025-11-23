@@ -6,31 +6,37 @@ on:
       - master
 
 jobs:
-  build:
+  build_and_release:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      # 1. 저장소 체크아웃
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Python 설치
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # 3. 의존성 설치
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
 
+      # 4. main.py 빌드
       - name: Build EXE
         run: |
           pyinstaller --onefile --windowed main.py --distpath dist
           dir dist
 
+      # 5. exe 이름 변경
       - name: Rename EXE
         run: Rename-Item -Path dist\main.exe -NewName GrowChick.exe
 
+      # 6. GitHub 릴리즈 생성 및 exe 업로드
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -39,3 +45,4 @@ jobs:
           name: GrowChick v1.${{ github.run_number }}
           body: "Automated release from master branch."
           artifacts: ./dist/GrowChick.exe
+          token: ${{ secrets.GITHUB_TOKEN }}
