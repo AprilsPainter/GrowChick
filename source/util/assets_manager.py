@@ -71,4 +71,6 @@ item_path = {
     "풋사과": os.path.join("assets", "items", "풋사과.png")
 }
 
+sound_path = {}
+
 font_path = os.path.join("assets", "ui", "fonts", "NeoDunggeunmoPro-Regular.ttf")
